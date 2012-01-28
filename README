@@ -1,0 +1,20 @@
+This is a set of simple scripts that interface with the Neurosky Mindwave.
+
+The Mindwave is a kind of Headset that can record EEG brain waves.
+
+These scripts have been tested under Linux(Ubuntu), so there might be some adaptation
+to do for other platforms.
+
+
+But, for what th heck might you use an EEG?
+
+* Neurofeedback training
+	* Better concentration
+	* Help treat Depression and ADHD
+	* There are other protocols, but these are a lot harder to implement
+* Help with meditation and measure progress and endurance
+* Use Brainwaves to control games
+
+
+Please message me, if you have suggestions for improvements/bugs etc. or if
+you are interested to develop more features/games for the Mindwave.
