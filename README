@@ -3,7 +3,12 @@ This is a set of simple scripts that interface with the Neurosky Mindwave.
 The Mindwave is a kind of Headset that can record EEG brain waves.
 
 These scripts have been tested under Linux(Ubuntu), so there might be some adaptation
-to do for other platforms.
+to do for other platforms. The USB device is hardcoded but is trivial to change in parser.py.
+
+You need to install pygame, pyserial, numpy and scipy. You might not have the neccessary
+permissions to open the serial connection. If that is the case, please drop me a note what you
+did to make it work. For example it might be enough to add your user account to the group
+"dialout".
 
 
 But, for what th heck might you use an EEG?
