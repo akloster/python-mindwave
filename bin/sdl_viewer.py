@@ -2,7 +2,8 @@ import pygame, sys
 from numpy import *
 from pygame.locals import *
 import scipy
-from pyeeg import bin_power
+from pymindwave.pyeeg import bin_power
+
 pygame.init()
 
 fpsClock= pygame.time.Clock()
@@ -10,9 +11,9 @@ fpsClock= pygame.time.Clock()
 window = pygame.display.set_mode((1280,720))
 pygame.display.set_caption("Mindwave Viewer")
 
-from parser import Parser
+from pymindwave.parser import Parser
 
-p = Parser()
+p = Parser('/dev/ttyUSB0')
 
 blackColor = pygame.Color(0,0,0)
 redColor = pygame.Color(255,0,0)
@@ -39,21 +40,21 @@ record_baseline = False
 
 while True:
 	p.update()
-	window.blit(background_img,(0,0))
+	#window.blit(background_img,(0,0))
 	if p.sending_data:
 		iteration+=1
-		
+
 		flen = 50
-			
+
 		if len(p.raw_values)>=500:
 			spectrum, relative_spectrum = bin_power(p.raw_values[-p.buffer_len:], range(flen),512)
 			spectra.append(array(relative_spectrum))
 			if len(spectra)>30:
 				spectra.pop(0)
-				
+
 			spectrum = mean(array(spectra),axis=0)
 			for i in range (flen-1):
-				value = float(spectrum[i]*1000) 
+				value = float(spectrum[i]*1000)
 				if i<3:
 					color = deltaColor
 				elif i<8:
@@ -74,7 +75,7 @@ while True:
 		pygame.draw.circle(window,redColor, (700,200),p.current_meditation/2)
 		pygame.draw.circle(window,greenColor, (700,200),60/2,1)
 		pygame.draw.circle(window,greenColor, (700,200),100/2,1)
-		
+
 		window.blit(meditation_img, (600,260))
 		if len(p.current_vector)>7:
 			m = max(p.current_vector)
@@ -89,9 +90,10 @@ while True:
 				pygame.draw.line(window, redColor, (i+25,500-lv),(i+25, 500-v))
 				lv = v
 	else:
-		img = font.render("Mindwave Headset is not sending data... Press F5 to autoconnect or F6 to disconnect.", False, redColor)
-		window.blit(img,(100,100))
-	
+                img = font.render("Mindwave Headset is not sending data... Press F5 to autoconnect or F6 to disconnect.", False, redColor)
+                window.blit(img,(100,100))
+		pass
+
 	for event in pygame.event.get():
 		if event.type==QUIT:
 			pygame.quit()
