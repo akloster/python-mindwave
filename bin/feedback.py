@@ -2,10 +2,11 @@ import pygame, sys
 from numpy import *
 from pygame.locals import *
 import scipy
-from pyeeg import bin_power
+from pymindwave.pyeeg import bin_power
 from time import time
 fpsClock= pygame.time.Clock()
 from random import random, choice
+
 class FeedbackTask:
 	def __init__(self):
 		font = pygame.font.Font("freesansbold.ttf",20)
@@ -19,13 +20,13 @@ class FeedbackGraph:
 	def __init__(self):
 		self.values = []
 		self.times = []
-	
+
 	def insert_value(self,t, value):
-		
+
 		self.values.append(value)
 		self.times.append(time())
-	
-	
+
+
 	def draw_graph(self,surface, scale):
 		x = 600
 		i = len(self.values)
@@ -49,21 +50,21 @@ class Attention(FeedbackTask):
 	name = "Attention"
 	def __init__(self):
 		FeedbackTask.__init__(self)
-		
+
 		self.values = []
 		self.times = []
 		self.graph = FeedbackGraph()
 	def process_baseline_recording(raw_values):
 		pass
-		
-		
+
+
 	def frame(self,p, window):
 		FeedbackTask.frame(self, p, window)
 		value = p.current_attention
 		if value>0 and value<=100:
 			if len(self.graph.times)==0 or time()>=self.graph.times[-1]+1:
 				self.graph.insert_value(time(), value)
-		
+
 		for i in range(6):
 			pygame.draw.line(window, pygame.Color(0,0,200),(0,400-i*20*3),(600,400-i*20*3), 2)
 		self.graph.draw_graph(window,3.0)
@@ -85,7 +86,7 @@ class Meditation(FeedbackTask):
 		if value>0 and value<=100:
 			if len(self.graph.times)==0 or time()>=self.graph.times[-1]+1:
 				self.graph.insert_value(time(), value)
-		
+
 		for i in range(6):
 			pygame.draw.line(window, pygame.Color(0,0,200),(0,400-i*20*3),(600,400-i*20*3), 2)
 		self.graph.draw_graph(window,3.0)
@@ -106,14 +107,14 @@ class ThetaLowerTask(FeedbackTask):
 		spectrum, relative_spectrum = bin_power(p.raw_values[-p.buffer_len:], range(flen),512)
 		self.spectra.append(array(relative_spectrum))
 		if len(self.spectra)>30:
-			self.spectra.pop(0)				
+			self.spectra.pop(0)
 		spectrum = mean(array(self.spectra),axis=0)
 		value = (1-sum(spectrum[3:8]))*100
 		self.graph.insert_value(time(), value)
 		for i in range(6):
 			pygame.draw.line(window, pygame.Color(0,0,200),(0,400-i*20*3),(600,400-i*20*3), 2)
 		self.graph.draw_graph(window,3.0)
-		
+
 
 
 class ThetaIncreaseTask(FeedbackTask):
@@ -130,7 +131,7 @@ class ThetaIncreaseTask(FeedbackTask):
 		spectrum, relative_spectrum = bin_power(p.raw_values[-p.buffer_len:], range(flen),512)
 		self.spectra.append(array(relative_spectrum))
 		if len(self.spectra)>10:
-			self.spectra.pop(0)				
+			self.spectra.pop(0)
 		spectrum = mean(array(self.spectra),axis=0)
 		value = (sum(spectrum[3:8] / sum(spectrum[8:40])))*200
 		self.graph.insert_value(time(), value)
@@ -146,7 +147,7 @@ task_keys ={
 	K_2: Meditation,
 	K_3: ThetaLowerTask,
 	K_4: ThetaIncreaseTask
-	
+
 }
 
 def feedback_menu(window,p):
@@ -195,13 +196,13 @@ def start_session(Task):
 
 if __name__=="__main__":
 	pygame.init()
-	
+
 	fpsClock= pygame.time.Clock()
 
 	window = pygame.display.set_mode((1280,720))
 	pygame.display.set_caption("PyGame Neurofeedback Trainer")
 
-	from parser import Parser
-	p = Parser()
+	from pymindwave.parser import Parser
+	p = Parser('/dev/ttyUSB0')
 	feedback_menu(window, p)
 
