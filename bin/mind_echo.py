@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+import platform
+
 from pymindwave.parser import Parser
 from pymindwave.pyeeg import bin_power
 
 
 if __name__ == "__main__":
-	p = Parser('/dev/ttyUSB0')
+	if platform.system() == 'Darwin':
+		p = Parser('/dev/tty.MindWave')
+	else:
+		p = Parser('/dev/ttyUSB0')
 	while True:
 		p.update()
 		if p.sending_data:
