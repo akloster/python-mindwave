@@ -90,8 +90,8 @@ while True:
 				pygame.draw.line(window, redColor, (i+25,500-lv),(i+25, 500-v))
 				lv = v
 	else:
-                img = font.render("Mindwave Headset is not sending data... Press F5 to autoconnect or F6 to disconnect.", False, redColor)
-                window.blit(img,(100,100))
+		img = font.render("Mindwave Headset is not sending data... Press F5 to autoconnect or F6 to disconnect.", False, redColor)
+		window.blit(img,(100,100))
 		pass
 
 	for event in pygame.event.get():

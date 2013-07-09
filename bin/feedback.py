@@ -186,10 +186,10 @@ def start_session(Task):
 				pygame.quit()
 				sys.exit()
 			if event.type==KEYDOWN:
-					if event.key== K_F5:
-						pass
-					elif event.key == K_ESCAPE:
-						quit = True
+				if event.key== K_F5:
+					pass
+				elif event.key == K_ESCAPE:
+					quit = True
 		task.frame(p,window)
 		pygame.display.update()
 		fpsClock.tick(20)
