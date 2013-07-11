@@ -25,8 +25,8 @@ to access the data. Maybe I will write a substitute in Python in the future,
 but for now I am satisfied with using Python only.
 """
 
-class Parser:
-	def __init__(self, serial_dev='/dev/ttyUSB0'):
+class VirtualParser(object):
+	def __init__(self, input_fstream):
 		self.parser = self.run()
 		self.parser.next()
 		self.current_vector  =[]
@@ -38,15 +38,15 @@ class Parser:
 		self.state ="initializing"
 		self.raw_file = None
 		self.esense_file = None
-		self.dongle = serial.Serial(serial_dev,  115200, timeout=0.001)
+		self.input_fstream = input_fstream
 
 	def update(self):
-		bytes = self.dongle.read(1000)
+		bytes = self.input_fstream.read(1000)
 		for b in bytes:
 			self.parser.send(ord(b))	# Send each byte to the generator
 
 	def write_serial(self, string):
-		self.dongle.write(string)
+		self.input_fstream.write(string)
 
 	def start_raw_recording(self, file_name):
 		self.raw_file = file(file_name, "wt")
@@ -130,15 +130,15 @@ class Parser:
 
 								left-=1
 							elif packet_code == 0x83:
-									vlength = yield
-									self.current_vector = []
-									for row in range(8):
-										a = yield
-										b = yield
-										c = yield
-										value = a*255*255+b*255+c
-										self.current_vector.append(value)
-									left-=vlength
+								vlength = yield
+								self.current_vector = []
+								for row in range(8):
+									a = yield
+									b = yield
+									c = yield
+									value = a*255*255+b*255+c
+									self.current_vector.append(value)
+								left -= vlength
 							packet_code = yield
 				else:
 					pass # sync failed
@@ -147,3 +147,12 @@ class Parser:
 
 dongle_state = None
 DONGLE_STANDBY= "Standby"
+
+
+class Parser(VirtualParser):
+	def __init__(self, serial_dev='/dev/ttyUSB0'):
+		self.dongle = serial.Serial(serial_dev,  115200, timeout=0.001)
+		VirtualParser.__init__(self, self.dongle)
+
+
+

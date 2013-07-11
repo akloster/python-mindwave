@@ -40,6 +40,17 @@ python sdl_viewer.py
 ```
 
 
+Hack
+----
+Before you send any pull request, please make sure all the test cases are
+passed. To run test cases, you have to first install nose python package and
+run:
+
+```
+nosetests
+```
+
+
 Misc
 ----
 But, for what might you use an EEG?
