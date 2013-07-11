@@ -1,5 +1,6 @@
 import struct
 from time import time
+from time import sleep
 from numpy import mean
 import serial
 
@@ -42,8 +43,9 @@ class VirtualParser(object):
 
 	def update(self):
 		input_stream = self.input_fstream.read(1000)
-		for b in input_stream:
+		#for b in input_stream:
 			#print '{0:x}'.format(ord(b))
+		for b in input_stream:
 			self.parser.send(ord(b))	# Send each byte to the generator
 
 	def write_serial(self, string):
@@ -88,6 +90,11 @@ class VirtualParser(object):
 						self.dongle_state= "standby"
 					elif packet_code == 0xd0:
 						self.dongle_state = "connected"
+					elif packet_code == 0xd2:
+						data_len = yield
+						headset_id = yield
+						headset_id += yield
+						self.dongle_state = "disconnected"
 					else:
 						self.sending_data = True
 						left = packet_length-2

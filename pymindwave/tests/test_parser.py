@@ -8,7 +8,16 @@ standby_test_stream = StringIO.StringIO(
     '\xaa\xaa' + # [SYNC] sync packets
     '\x03' + # [PLENGTH] payload length
     '\xd4\x01\x00' + # in standby mode
-    '\x2a'
+    '\x2a' # [CHKSUM]
+)
+
+disconnected_test_stream = StringIO.StringIO(
+    '\xaa\xaa' + # [SYNC] sync packets
+    '\x04' + # [PLENGTH] payload length
+    '\xd2' + # headset disconnected
+    '\x02' + # data len
+    '\xa1\x6c' + # headset global ID: 0xa16c
+    '\x1d' # [CHKSUM]
 )
 
 official_test_stream = StringIO.StringIO(
@@ -62,4 +71,7 @@ def test_official_test_stream():
     assert (p.current_meditation == 61)
     assert (p.current_vector == [148, 66, 11, 100, 77, 61, 7, 5])
 
-
+def test_disconnected_mode():
+    p = parser.VirtualParser(disconnected_test_stream)
+    p.update()
+    assert (p.dongle_state == 'disconnected')
