@@ -2,19 +2,29 @@
 # -*- coding:utf-8 -*-
 
 import platform
-
-from pymindwave.parser import Parser
-from pymindwave.pyeeg import bin_power
+import sys, time
+from pymindwave import headset
 
 
 if __name__ == "__main__":
-	if platform.system() == 'Darwin':
-		p = Parser('/dev/tty.MindWave')
-	else:
-		p = Parser('/dev/ttyUSB0')
-	while True:
-		p.update()
-		if p.sending_data:
-			print 'Attention: {0}, Meditation: {1}'.format(
-					p.current_attention, p.current_meditation)
+    if platform.system() == 'Darwin':
+        hs = headset.Headset('/dev/tty.MindWave')
+    else:
+        hs = headset.Headset('/dev/ttyUSB0')
 
+    while 1:
+        print hs.get_state()
+        time.sleep(1)
+        if (hs.get_state() == 'standby'):
+            print 'trying to connect...'
+            hs.connect()
+        if (hs.get_state() == 'connected'):
+            print 'connected, wait 3s to collect data'
+            time.sleep(3)
+            print hs.get('attention')
+            print hs.get('meditation')
+            print hs.get('rawdata')
+            print 'disconnecting...'
+            hs.disconnect()
+            hs.destroy()
+            sys.exit(0)
