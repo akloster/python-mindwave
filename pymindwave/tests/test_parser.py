@@ -4,6 +4,13 @@
 import StringIO
 from pymindwave import parser
 
+standby_test_stream = StringIO.StringIO(
+    '\xaa\xaa' + # [SYNC] sync packets
+    '\x03' + # [PLENGTH] payload length
+    '\xd4\x01\x00' + # in standby mode
+    '\x2a'
+)
+
 official_test_stream = StringIO.StringIO(
     '\xaa\xaa' + # [SYNC] sync packets
     '\x20' + # [PLENGTH] payload length
@@ -42,6 +49,10 @@ official_test_stream = StringIO.StringIO(
     '\x34' # [CHKSUM] (1's comp inverse of 8-bit Payload sum of 0xCB)
 )
 
+def test_standby_mode():
+    p = parser.VirtualParser(standby_test_stream)
+    p.update()
+    assert (p.dongle_state == 'standby')
 
 def test_official_test_stream():
     p = parser.VirtualParser(official_test_stream)

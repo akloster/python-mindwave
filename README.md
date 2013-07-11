@@ -7,8 +7,7 @@ This is a set of simple scripts that interface with the Neurosky Mindwave.
 The Mindwave is a kind of Headset that can record EEG brain waves.
 
 These scripts have been tested under Linux(Ubuntu) and OSX, so there might be
-some adaptation to do for other platforms. The USB device is hardcoded but is
-trivial to change in parser.py.
+some adaptation to do for other platforms.
 
 
 Dependencies

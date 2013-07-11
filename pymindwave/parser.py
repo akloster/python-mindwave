@@ -35,14 +35,15 @@ class VirtualParser(object):
 		self.current_attention= 0
 		self.current_spectrum = []
 		self.sending_data = False
-		self.state ="initializing"
+		self.dongle_state ="initializing"
 		self.raw_file = None
 		self.esense_file = None
 		self.input_fstream = input_fstream
 
 	def update(self):
-		bytes = self.input_fstream.read(1000)
-		for b in bytes:
+		input_stream = self.input_fstream.read(1000)
+		for b in input_stream:
+			#print '{0:x}'.format(ord(b))
 			self.parser.send(ord(b))	# Send each byte to the generator
 
 	def write_serial(self, string):
@@ -144,9 +145,6 @@ class VirtualParser(object):
 					pass # sync failed
 			else:
 				pass # sync failed
-
-dongle_state = None
-DONGLE_STANDBY= "Standby"
 
 
 class Parser(VirtualParser):
