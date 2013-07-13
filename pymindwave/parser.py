@@ -148,8 +148,8 @@ class VirtualParser(object):
                                     a = yield
                                     b = yield
                                     c = yield
-                                    #value = a*255*255+b*255+c
-                                    value = c*255*255+b*255+a
+                                    value = a*255*255+b*255+c
+                                    #value = c*255*255+b*255+a
                                     self.current_vector.append(value)
                                 left -= vlength
                             packet_code = yield
