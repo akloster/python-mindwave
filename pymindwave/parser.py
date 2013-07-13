@@ -34,6 +34,7 @@ class VirtualParser(object):
 		self.raw_values =  []
 		self.current_meditation = 0
 		self.current_attention= 0
+		self.current_blink_strength = 0
 		self.current_spectrum = []
 		self.sending_data = False
 		self.dongle_state ="initializing"
@@ -137,6 +138,9 @@ class VirtualParser(object):
 											self.esense_file.write("%.2f,%i,\n" % (time()-self.esense_start_time, v))
 
 								left-=1
+							elif packet_code == 0x16: # Blink Strength
+								self.current_blink_strength = yield
+								left-=1
 							elif packet_code == 0x83:
 								vlength = yield
 								self.current_vector = []
@@ -144,7 +148,8 @@ class VirtualParser(object):
 									a = yield
 									b = yield
 									c = yield
-									value = a*255*255+b*255+c
+									#value = a*255*255+b*255+c
+									value = c*255*255+b*255+a
 									self.current_vector.append(value)
 								left -= vlength
 							packet_code = yield
