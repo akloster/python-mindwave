@@ -4,6 +4,7 @@
 import threading
 import serial
 import parser
+import time
 
 
 COMMAND_BYTES = {
@@ -21,6 +22,8 @@ class DongleReader(threading.Thread):
 
     def run(self):
         while self.running:
+            if not self.parser.sending_data:
+                time.sleep(0.5)
             self.parser.update()
 
     def stop(self):

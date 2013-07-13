@@ -11,10 +11,13 @@ class FeedbackTask:
 	def __init__(self):
 		font = pygame.font.Font("freesansbold.ttf",20)
 		self.title_img = font.render(self.name,False, pygame.Color(255,0,0))
+
 	def process_baseline_recording(raw_values):
 		pass
+
 	def frame(self,p,surface):
 		surface.blit(self.title_img,(300,50))
+
 
 class FeedbackGraph:
 	def __init__(self):
@@ -25,7 +28,6 @@ class FeedbackGraph:
 
 		self.values.append(value)
 		self.times.append(time())
-
 
 	def draw_graph(self,surface, scale):
 		x = 600
@@ -50,13 +52,12 @@ class Attention(FeedbackTask):
 	name = "Attention"
 	def __init__(self):
 		FeedbackTask.__init__(self)
-
 		self.values = []
 		self.times = []
 		self.graph = FeedbackGraph()
+
 	def process_baseline_recording(raw_values):
 		pass
-
 
 	def frame(self,p, window):
 		FeedbackTask.frame(self, p, window)
@@ -80,6 +81,7 @@ class Meditation(FeedbackTask):
 
 	def process_baseline_recording(raw_values):
 		pass
+
 	def frame(self,p, window):
 		FeedbackTask.frame(self, p, window)
 		value = p.current_meditation
@@ -99,6 +101,7 @@ class ThetaLowerTask(FeedbackTask):
 		FeedbackTask.__init__(self)
 		self.spectra = []
 		self.graph = FeedbackGraph()
+
 	def process_baseline_recording(raw_values):
 		pass
 
