@@ -69,6 +69,27 @@ class Headset():
     def get_rawdata(self):
         return self.parser.raw_values
 
+    def get_waves_vector(self):
+        return self.parser.current_vector
+
+    def get_delta_waves(self):
+        return self.parser.current_vector[0]
+
+    def get_theta_waves(self):
+        return self.parser.current_vector[1]
+
+    def get_alpha_waves(self):
+        return (self.parser.current_vector[2] + self.parser.current_vector[3]) / 2
+
+    def get_beta_waves(self):
+        return (self.parser.current_vector[4] + self.parser.current_vector[5]) / 2
+
+    def get_gamma_waves(self):
+        return (self.parser.current_vector[6] + self.parser.current_vector[7]) / 2
+
+    def get_blink_strength(self):
+        return self.parser.current_blink_strength
+
     def get(self, stuff):
         if stuff == 'attention':
             return self.get_current_attention()
@@ -76,6 +97,22 @@ class Headset():
             return self.get_current_meditation()
         elif stuff == 'rawdata':
             return self.get_rawdata()
+        elif stuff == 'state':
+            return self.get_state()
+        elif stuff == 'waves_vector':
+            return self.get_waves_vector()
+        elif stuff == 'delta_waves':
+            return self.get_delta_waves()
+        elif stuff == 'theta_waves':
+            return self.get_theta_waves()
+        elif stuff == 'alpha_waves':
+            return self.get_alpha_waves()
+        elif stuff == 'beta_waves':
+            return self.get_beta_waves()
+        elif stuff == 'gamma_waves':
+            return self.get_gamma_waves()
+        elif stuff == 'blink_strength':
+            return self.get_blink_strength()
         else:
             return None
 
