@@ -40,7 +40,7 @@ record_baseline = False
 
 while True:
     p.update()
-    #window.blit(background_img,(0,0))
+    window.blit(background_img,(0,0))
     if p.sending_data:
         iteration+=1
 
@@ -65,16 +65,16 @@ while True:
                     color = betaColor
                 else:
                     color = gammaColor
-                pygame.draw.rect(window, color, (25+i*10,400-value, 5,value))
+                pygame.draw.rect(window, color, (25+i*10, 400-value, 5, value))
         else:
             pass
-        pygame.draw.circle(window,redColor, (800,200),p.current_attention/2)
-        pygame.draw.circle(window,greenColor, (800,200),60/2,1)
-        pygame.draw.circle(window,greenColor, (800,200),100/2,1)
+        pygame.draw.circle(window, redColor, (800,200), p.current_attention/2)
+        pygame.draw.circle(window, greenColor, (800,200), 60/2,1)
+        pygame.draw.circle(window, greenColor, (800,200), 100/2,1)
         window.blit(attention_img, (760,260))
-        pygame.draw.circle(window,redColor, (700,200),p.current_meditation/2)
-        pygame.draw.circle(window,greenColor, (700,200),60/2,1)
-        pygame.draw.circle(window,greenColor, (700,200),100/2,1)
+        pygame.draw.circle(window, redColor, (700,200), p.current_meditation/2)
+        pygame.draw.circle(window, greenColor, (700,200), 60/2, 1)
+        pygame.draw.circle(window, greenColor, (700,200), 100/2, 1)
 
         window.blit(meditation_img, (600,260))
         if len(p.current_vector)>7:
@@ -90,7 +90,7 @@ while True:
             lv = 0
             for i,value in enumerate(p.raw_values[-1000:]):
                 v = value/ 255.0/ 5
-                pygame.draw.line(window, redColor, (i+25,500-lv),(i+25, 500-v))
+                pygame.draw.line(window, redColor, (i+25, 500-lv), (i+25, 500-v))
                 lv = v
     else:
         img = font.render("Mindwave Headset is not sending data... Press F5 to autoconnect or F6 to disconnect.", False, redColor)
