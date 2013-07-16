@@ -7,8 +7,7 @@ This is a set of simple scripts that interface with the Neurosky Mindwave.
 The Mindwave is a kind of Headset that can record EEG brain waves.
 
 These scripts have been tested under Linux(Ubuntu) and OSX, so there might be
-some adaptation to do for other platforms. The USB device is hardcoded but is
-trivial to change in parser.py.
+some adaptation to do for other platforms.
 
 
 Dependencies
@@ -37,6 +36,17 @@ example it might be enough to add your user account to the group "dialout".
 
 ```
 python sdl_viewer.py
+```
+
+
+Hack
+----
+Before you send any pull request, please make sure all the test cases are
+passed. To run test cases, you have to first install nose python package and
+run:
+
+```
+nosetests
 ```
 
 
