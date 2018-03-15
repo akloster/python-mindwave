@@ -6,7 +6,6 @@ import bluetooth
 import time
 import sys
 import argparse
-from progressbar import ProgressBar, Bar, Percentage
 
 
 from mindwave.bluetooth_headset import connect_magic, connect_bluetooth_addr
@@ -33,7 +32,7 @@ if __name__ == '__main__':
                               extra_args=extra_args)
 
     if args.measure not in ["attention", "meditation"]:
-        print "Unknown measure %s" % repr(args.measure)
+        print("Unknown measure %s" % repr(args.measure))
         sys.exit(-1)
     recorder = TimeSeriesRecorder()
     parser = ThinkGearParser(recorders=[recorder])
@@ -42,8 +41,6 @@ if __name__ == '__main__':
         measure_name = 'Attention'
     else:
         measure_name = 'Meditation'
-
-    bar = ProgressBar(widgets=[measure_name, Percentage(), Bar()]).start()
 
     while 1:
         time.sleep(0.25)
@@ -57,6 +54,4 @@ if __name__ == '__main__':
             if len(recorder.meditation)>0:
                 v = recorder.meditation[-1]
         if v>0:
-            bar.start()
-            bar.update(v)
-
+            print("BALABLA:",v)

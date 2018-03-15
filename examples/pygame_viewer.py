@@ -83,12 +83,12 @@ def main():
             else:
                 pass
             pygame.draw.circle(window, redColor, (800,200), int(recorder.attention[-1]/2))
-            pygame.draw.circle(window, greenColor, (800,200), 60/2,1)
-            pygame.draw.circle(window, greenColor, (800,200), 100/2,1)
+            pygame.draw.circle(window, greenColor, (800,200), 60//2,1)
+            pygame.draw.circle(window, greenColor, (800,200), 100//2,1)
             window.blit(attention_img, (760,260))
             pygame.draw.circle(window, redColor, (700,200), int(recorder.meditation[-1]/2))
-            pygame.draw.circle(window, greenColor, (700,200), 60/2, 1)
-            pygame.draw.circle(window, greenColor, (700,200), 100/2, 1)
+            pygame.draw.circle(window, greenColor, (700,200), 60//2, 1)
+            pygame.draw.circle(window, greenColor, (700,200), 100//2, 1)
 
             window.blit(meditation_img, (600,260))
 

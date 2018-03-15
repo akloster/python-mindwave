@@ -6,8 +6,6 @@ import bluetooth
 import time
 import sys
 import argparse
-from progressbar import ProgressBar, Bar, Percentage
-
 
 from mindwave.bluetooth_headset import connect_magic, connect_bluetooth_addr
 from mindwave.bluetooth_headset import BluetoothError
@@ -44,9 +42,9 @@ if __name__ == '__main__':
     while 1:
         t = time.time()
         try:
-            data = socket.recv(20000)
-        except BluetoothError, e:
-            print e
+            data = socket.recv(10000)
+        except BluetoothError:
+            print("BluetoothError")
             time.sleep(0.5)
             continue
         parser.feed(data)
@@ -55,5 +53,7 @@ if __name__ == '__main__':
         if (time.time()-last_message)>=5:
             print("%.2f" % (time.time()-start))
             last_message = time.time()
+            r = parser.recorders[0]
+            print(r.meditation[-1], r.attention[-1], sum(r.raw[-100:-1]))
 
 
