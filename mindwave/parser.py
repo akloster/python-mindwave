@@ -38,7 +38,7 @@ from datetime import datetime
 """
 def queue_to_series(a, freq="s"):
     t = pd.date_range(end=datetime.now(), freq=freq, periods=len(a))
-    return pd.TimeSeries(a, index=t)
+    return pd.Series(a, index=t)
 
 class ThinkGearParser(object):
     def __init__(self, recorders=None):
@@ -136,11 +136,11 @@ class ThinkGearParser(object):
 
 class TimeSeriesRecorder:
     def __init__(self, file_name=None):
-        self.meditation = pd.TimeSeries()
-        self.attention = pd.TimeSeries()
-        self.raw = pd.TimeSeries()
-        self.blink = pd.TimeSeries()
-        self.poor_signal = pd.TimeSeries()
+        self.meditation = pd.Series()
+        self.attention = pd.Series()
+        self.raw = pd.Series()
+        self.blink = pd.Series()
+        self.poor_signal = pd.Series()
         self.attention_queue = []
         self.meditation_queue = []
         self.poor_signal_queue = []
