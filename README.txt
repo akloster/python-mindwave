@@ -14,3 +14,5 @@ treatment.
 
 Currently this software can only connect to the bluetooth version
 (Mindwave Mobile), because I don't posess the other variations.
+
+Hope you like this Mindwave project, Thank you:)
