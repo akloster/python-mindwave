@@ -1,4 +1,4 @@
-Python Mindwave
+Python Mindwave :
 
 This is a library to interface with the Neurosky Mindwave headsets. It can
 parse the binary protocol spoken by Neurosky's ThinkGear AM modules. These
