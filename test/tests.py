@@ -19,3 +19,10 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
+     def __init__(self, name, balance):
+        self._name = name
+        self.__balance = balance
+        self._transaction_list = [(Account._current_time(), balance)]
+        print("Account created for " + self._name)
+        self.show_balance()
