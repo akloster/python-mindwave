@@ -71,13 +71,13 @@ def hurst(X):
 	
 	N = len(X)
     
-	T = array([float(i) for i in xrange(1,N+1)])
+	T = array([float(i) for i in range(1,N+1)])
 	Y = cumsum(X)
 	Ave_T = Y/T
 	
 	S_T = zeros((N))
 	R_T = zeros((N))
-	for i in xrange(N):
+	for i in range(N):
 		S_T[i] = std(X[:i+1])
 		X_T = Y - T * Ave_T[i]
 		R_T[i] = max(X_T[:i + 1]) - min(X_T[:i + 1])
@@ -166,8 +166,8 @@ def embed_seq(X,Tau,D):
 		exit()
 
 	Y=zeros((N - (D - 1) * Tau, D))
-	for i in xrange(0, N - (D - 1) * Tau):
-		for j in xrange(0, D):
+	for i in range(0, N - (D - 1) * Tau):
+		for j in range(0, D):
 			Y[i][j] = X[i + j * Tau]
 	return Y
 
@@ -219,7 +219,7 @@ def in_range(Template, Scroll, Distance):
 
 	# first compare Template[:-2] and Scroll[:-2]
 
-	for Bit in xrange(0, len(Template) - 1): # every bit of Template is in range of Scroll
+	for Bit in range(0, len(Template) - 1): # every bit of Template is in range of Scroll
 		Match_No_Tail = filter(bit_in_range, Match_No_Tail)
 		print Match_No_Tail
 		
@@ -291,7 +291,7 @@ def bin_power(X,Band,Fs):
 	C = fft(X)
 	C = abs(C)
 	Power =zeros(len(Band)-1);
-	for Freq_Index in xrange(0,len(Band)-1):
+	for Freq_Index in range(0,len(Band)-1):
 		Freq = float(Band[Freq_Index])										## Xin Liu
 		Next_Freq = float(Band[Freq_Index+1])
 		Power[Freq_Index] = sum(C[floor(Freq/Fs*len(X)):floor(Next_Freq/Fs*len(X))])
@@ -308,7 +308,7 @@ def first_order_diff(X):
 	"""
 	D=[]
 	
-	for i in xrange(1,len(X)):
+	for i in range(1,len(X)):
 		D.append(X[i]-X[i-1])
 
 	return D
@@ -329,7 +329,7 @@ def pfd(X, D=None):
 	if D is None:																						## Xin Liu
 		D = first_order_diff(X)
 	N_delta= 0; #number of sign changes in derivative of the signal
-	for i in xrange(1,len(D)):
+	for i in range(1,len(D)):
 		if D[i]*D[i-1]<0:
 			N_delta += 1
 	n = len(X)
@@ -343,11 +343,11 @@ def hfd(X, Kmax):
 	L = [];
 	x = []
 	N = len(X)
-	for k in xrange(1,Kmax):
+	for k in range(1,Kmax):
 		Lk = []
-		for m in xrange(0,k):
+		for m in range(0,k):
 			Lmk = 0
-			for i in xrange(1,int(floor((N-m)/k))):
+			for i in range(1,int(floor((N-m)/k))):
 				Lmk += abs(X[m+i*k] - X[m+i*k-k])
 			Lmk = Lmk*(N - 1)/floor((N - m) / float(k)) / k
 			Lk.append(Lmk)
@@ -405,7 +405,7 @@ def hjorth(X, D = None):
 	M2 = float(sum(D ** 2)) / n
 	TP = sum(array(X) ** 2)
 	M4 = 0;
-	for i in xrange(1, len(D)):
+	for i in range(1, len(D)):
 		M4 += (D[i] - D[i - 1]) ** 2
 	M4 = M4 / n
 	
@@ -464,7 +464,7 @@ def spectral_entropy(X, Band, Fs, Power_Ratio = None):
 		Power, Power_Ratio = bin_power(X, Band, Fs)
 
 	Spectral_Entropy = 0
-	for i in xrange(0, len(Power_Ratio) - 1):
+	for i in range(0, len(Power_Ratio) - 1):
 		Spectral_Entropy += Power_Ratio[i] * log(Power_Ratio[i])
 	Spectral_Entropy /= log(len(Power_Ratio))	# to save time, minus one is omitted
 	return -1 * Spectral_Entropy
@@ -572,7 +572,7 @@ def fisher_info(X, Tau, DE, W = None):
 		W /= sum(W)	
 	
 	FI = 0
-	for i in xrange(0, len(W) - 1):	# from 1 to M
+	for i in range(0, len(W) - 1):	# from 1 to M
 		FI += ((W[i +1] - W[i]) ** 2) / (W[i])
 	
 	return FI
@@ -641,9 +641,9 @@ def ap_entropy(X, M, R):
 	Cm, Cmp = zeros(N - M + 1), zeros(N - M)
 	# in case there is 0 after counting. Log(0) is undefined.
 
-	for i in xrange(0, N - M):
+	for i in range(0, N - M):
 #		print i
-		for j in xrange(i, N - M): # start from i, self-match counts in ApEn
+		for j in range(i, N - M): # start from i, self-match counts in ApEn
 #			if max(abs(Em[i]-Em[j])) <= R:# compare N-M scalars in each subseq v 0.01b_r1
 			if in_range(Em[i], Em[j], R):
 				Cm[i] += 1																						### Xin Liu
@@ -726,8 +726,8 @@ def samp_entropy(X, M, R):
 	Cm, Cmp = zeros(N - M - 1) + 1e-100, zeros(N - M - 1) + 1e-100
 	# in case there is 0 after counting. Log(0) is undefined.
 
-	for i in xrange(0, N - M):
-		for j in xrange(i + 1, N - M): # no self-match
+	for i in range(0, N - M):
+		for j in range(i + 1, N - M): # no self-match
 #			if max(abs(Em[i]-Em[j])) <= R:  # v 0.01_b_r1 
 			if in_range(Em[i], Em[j], R):
 				Cm[i] += 1
@@ -840,13 +840,13 @@ def dfa(X, Ave = None, L = None):
 
 	F = zeros(len(L)) # F(n) of different given box length n
 
-	for i in xrange(0,len(L)):
+	for i in range(0,len(L)):
 		n = int(L[i])						# for each box length L[i]
 		if n==0:
 			print "time series is too short while the box length is too big"
 			print "abort"
 			exit()
-		for j in xrange(0,len(X),n): # for each box
+		for j in range(0,len(X),n): # for each box
 			if j+n < len(X):
 				c = range(j,j+n)
 				c = vstack([c, ones(n)]).T # coordinates of time in the box
