@@ -22,7 +22,7 @@ def connect_magic():
         If this computer hasn't connected to the headset before, you may need
         to make it visible to this computer's bluetooth adapter. This is done
         by pushing the switch on the left side of the headset to the "on/pair"
-        position until the blinking rythm switches.
+        position until the blinking rhythm switches.
 
         The address is then put in a file for later reference.
 
